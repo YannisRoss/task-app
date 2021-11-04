@@ -1,29 +1,38 @@
 
 import React, { Component } from "react";
+import Overview from "./components/Overview";
+import uniqid from "uniqid";
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      task: { text: ''},
+      task: {
+        text: '',
+        id: uniqid()
+      },
       tasks: [],
     };
   }
 
   handleChange = (e) => {
     this.setState({
-      task : {
+      task: {
         text: e.target.value,
-      }
+        id: this.state.task.id,
+      },
     });
   };
-  
+
   onSubmitTask = (e) => {
     e.preventDefault();
     this.setState({
       tasks: this.state.tasks.concat(this.state.task),
-      task: { text: '' },
+      task: {
+        text: '', 
+        id: uniqid()
+      },
     });
   };
 
@@ -44,6 +53,8 @@ class App extends Component {
             Add Task
           </button>
         </form>
+        <Overview tasks={tasks} />
+
       </div>
     );
   }
