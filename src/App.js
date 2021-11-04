@@ -5,7 +5,10 @@ import uniqid from "uniqid";
 
 class App extends Component {
   constructor() {
-    super();
+    super()
+    
+    this.removeTask = this.removeTask.bind(this);
+    ;
 
     this.state = {
       task: {
@@ -14,6 +17,16 @@ class App extends Component {
       },
       tasks: [],
     };
+  }
+
+  removeTask(task) {
+    
+    let array = [...this.state.tasks];
+    let index = array.indexOf(task)
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({tasks: array});
+    }
   }
 
   handleChange = (e) => {
@@ -31,10 +44,13 @@ class App extends Component {
       tasks: this.state.tasks.concat(this.state.task),
       task: {
         text: '', 
-        id: uniqid()
+        id: uniqid(),
+
       },
     });
   };
+
+  
 
   render() {
     const { task, tasks } = this.state;
@@ -53,7 +69,7 @@ class App extends Component {
             Add Task
           </button>
         </form>
-        <Overview tasks={tasks} />
+        <Overview tasks={tasks} removeTask={this.removeTask} />
 
       </div>
     );
